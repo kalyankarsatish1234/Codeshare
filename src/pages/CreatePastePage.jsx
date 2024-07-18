@@ -8,13 +8,16 @@ const CreatePastePage = () => {
   const [error, setError] = useState('');
   const [copyStatus, setCopyStatus] = useState('');
 
+  // Use environment variable
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
   // Determine if the button should be disabled
   const isButtonDisabled = text.trim() === '';
 
   const handleCreatePaste = async () => {
     try {
       setError('');
-      const response = await axios.post('/api/pastes', { text });
+      const response = await axios.post(`${API_BASE_URL}/api/pastes`, { text });
       setOtp(response.data.otp);
       setShowOtp(true);
       setCopyStatus('');  // Clear the copy status when creating a new paste
