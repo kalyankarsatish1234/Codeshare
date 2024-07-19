@@ -6,7 +6,7 @@ const GetPastePage = () => {
   const [pasteText, setPasteText] = useState('');
   const [error, setError] = useState('');
   const [copyStatus, setCopyStatus] = useState('');
-  const [isCopied, setIsCopied] = useState(false);  // New state to track if text is copied
+  const [isCopied, setIsCopied] = useState(false);
 
   // Determine if the button should be disabled
   const isGetTextButtonDisabled = otpInput.trim() === '';
@@ -15,11 +15,11 @@ const GetPastePage = () => {
   const handleGetPaste = async () => {
     try {
       setError('');
-      const response = await axios.post(`/api/pastes/${otpInput}`);
+      const response = await axios.get(`/api/pastes/${otpInput}`);
       setPasteText(response.data.text);
       setOtpInput('');
-      setCopyStatus('');  // Clear the copy status when getting new text
-      setIsCopied(false);  // Reset the copy status
+      setCopyStatus('');
+      setIsCopied(false);
     } catch (error) {
       console.error('Error retrieving paste:', error);
       setError('Invalid OTP. Please try again.');
@@ -29,10 +29,10 @@ const GetPastePage = () => {
   const handleCopyText = () => {
     navigator.clipboard.writeText(pasteText);
     setCopyStatus('Copied!');
-    setIsCopied(true);  // Update the state to show that text is copied
+    setIsCopied(true);
     setTimeout(() => {
       setCopyStatus('');
-      setIsCopied(false);  // Reset the copied state after 2 seconds
+      setIsCopied(false);
     }, 2000);
   };
 
